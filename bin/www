@@ -4,6 +4,8 @@
  * Module dependencies.
  */
 
+var conn = require('../utils/dao');
+
 var app = require('../app');
 var debug = require('debug')('swotbackend:server');
 var http = require('http');
