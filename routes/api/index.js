@@ -1,11 +1,16 @@
 var express = require('express');
 var router = express.Router();
 
+var swotRouter = require('./swot/index');
+
 router.get('/', (req, res, next)=>{
-    res.status(200).json({"msg":"Hola Mundo"});
+    res.status(200).json({"msg":"Api V1 JSON"});
   }
 );
 
+router.use('/swot', swotRouter);
+
+/*
 router.get("/", (req, res, next) => {
   return res.status(200).json({
     message: "Hello from root!",
@@ -76,5 +81,5 @@ router.post("/conjunto", (req, res, next) => {
   return res.status(200).json({ rango: arrTuplas });
 });
 
-
+*/
 module.exports = router;
