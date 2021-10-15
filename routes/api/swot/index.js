@@ -13,6 +13,35 @@ router.get('/all', async (req, res, next)=>{
   }
 });
 
+router.get('/byid/:id', async (req, res, next)=>{
+  try {
+    const {id} = req.params;
+    const oneSwotEntry = await Swot.getById(id);
+    return res.status(200).json(oneSwotEntry);
+  } catch (ex) {
+    console.log(ex);
+    return res.status(500).json({ msg: "Error al procesar petición" });
+  }
+}); // byid
+
+router.post('/new', async (req, res, next)=>{
+  try{
+    const {
+      swotType,
+      swotDesc,
+      swotMeta
+    } = req.body;
+    const swotMetaArray = swotMeta.split('|');
+    // validaciones
+    const result = await Swot.addNew(swotType, swotDesc, swotMetaArray);
+    console.log(result);
+    res.status(200).json({msg:"Agregado Satisfactoriamente"});
+  } catch (ex) {
+    console.log(ex);
+    return res.status(500).json({ msg: "Error al procesar petición" });
+  }
+}); // /new
+
 /*
 // Uso tradicional con inyeccion de handlers | funciones
 router.get('/all', (req, res, next) => {
