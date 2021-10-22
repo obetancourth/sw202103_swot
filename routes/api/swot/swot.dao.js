@@ -20,6 +20,23 @@ class Swot{
     return swots.toArray();
   }
 
+  async getWithFilterAndProjection(filter, projection) {
+    // SELECT {projection} from SWOT where {filter};
+    // SELECT _id, swotRelevance from SWOT;
+    let p = {
+      "projection": projection
+    }
+    let swots = await this.swotColl.find(filter, p );
+    return swots.toArray();
+  }
+
+  async updateRelevanceRandom(id) {
+    const filter = {"_id": new ObjectID(id)};
+    const updateAction = {"$set": {swotRelevance: Math.round(Math.random()*100)/100}};
+    let result = await this.swotColl.updateOne(filter, updateAction);
+    return result;
+  }
+
   async getById(id){
     const filter = { "_id": new ObjectID(id)};
     let swotDocument = await this.swotColl.findOne(filter);

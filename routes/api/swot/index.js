@@ -46,6 +46,31 @@ router.get('/bymeta/:meta', async (req, res, next) => {
   }
 }); // get by meta
 
+router.get('/byrelevancerange/:lower/:upper/:extremes', async (req, res, next)=>{
+  try{
+    const {lower, upper, extremes } = req.params;
+    const filter = (parseInt(extremes) > 0 ) ?
+      {
+        swotRelevance: {
+          "$gte": parseFloat(lower),
+          "$lte": parseFloat(upper)
+        }
+      }
+     :
+     {
+      swotRelevance: {
+        "$gt": parseFloat(lower),
+        "$lt": parseFloat(upper)
+      }
+    };
+    const swots = await Swot.getWithFilterAndProjection(filter, {});
+    return res.status(200).json(swots);
+  }catch (ex) {
+    console.log(ex);
+    return res.status(500).json({ msg: "Error al procesar petición" });
+  }
+});
+
 router.post('/new', async (req, res, next)=>{
   try{
     const {
@@ -102,5 +127,24 @@ router.delete('/delete/:id', async (req, res, next)=>{
     return res.status(500).json({ msg: "Error al procesar petición" });
   }
 }); // delete
+
+// Metodos para corregir documentos masivos
+
+router.get('/fix', async (req, res, next)=>{
+  try {
+    let swots = await Swot.getWithFilterAndProjection(
+      {},
+      { _id: 1, swotRelevance:1}
+    );
+    swots.map(async (o)=>{
+      await Swot.updateRelevanceRandom(o._id);
+    });
+    return res.status(200).json(swots);
+  }catch(ex){
+    console.log(ex);
+    return res.status(500).json({ msg: "Error al procesar petición" });
+  }
+});
+
 
 module.exports = router;
