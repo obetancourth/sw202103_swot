@@ -56,6 +56,29 @@ class Swot{
     return cursor.toArray();
   }
 
+  async getByFacet(textToSearch, page, itemsPerPage){
+    const filter = { swotDesc:  RegExp(textToSearch,'g')};
+    console.log(filter);
+    /*const options = {
+      projection: {},
+      limit: itemsPerPage,
+      skip: (itemsPerPage * (page - 1))
+    };*/
+    //let cursor = await this.swotColl.find(filter, options);
+    let cursor = await this.swotColl.find(filter);
+    let docsMatched = await cursor.count();
+    cursor.skip((itemsPerPage * (page - 1)));
+    cursor.limit(itemsPerPage);
+    let documents = await cursor.toArray();
+    return {
+      docsMatched,
+      documents,
+      page,
+      itemsPerPage
+    }
+    // SELECT column1, column2 from TABLE where column1 like '%SomeText%';
+  }
+
   /*
     SWOT, SWOTMETA   {swotid 1:n}
     SELECT * from SWOT INNER JOIN SWOTMETA on SWOT.swotid = SWOTMETA.swotid

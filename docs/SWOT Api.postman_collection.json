@@ -1,0 +1,266 @@
+{
+	"info": {
+		"_postman_id": "72d093be-8ca4-4d5d-bec8-8c607f834d87",
+		"name": "SWOT Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "swot",
+			"item": [
+				{
+					"name": "all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/swot/all",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"swot",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "new",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "swotType",
+									"value": "W",
+									"type": "text"
+								},
+								{
+									"key": "swotDesc",
+									"value": "No hay incertidumbre en el alcance del proyecto",
+									"type": "text"
+								},
+								{
+									"key": "swotMeta",
+									"value": "planning|kickoff",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST}}/api/swot/new",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"swot",
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "byid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/swot/byid/:id",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"swot",
+								"byid",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "61677a877eb8bbe578c50ac8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "swotMetaKey",
+									"value": "Agregar Por Api",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST}}/api/swot/update/:id",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"swot",
+								"update",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "61677a877eb8bbe578c50ac8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/swot/delete/:id",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"swot",
+								"delete",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6168c79880c2c45adc1c2820"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "byType",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/swot/bytype/:type",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"swot",
+								"bytype",
+								":type"
+							],
+							"variable": [
+								{
+									"key": "type",
+									"value": "W"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "byMeta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/swot/bymeta/:meta",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"swot",
+								"bymeta",
+								":meta"
+							],
+							"variable": [
+								{
+									"key": "meta",
+									"value": "kickoff"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fix",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/swot/fix",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"swot",
+								"fix"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Relevance Range",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "HOST",
+			"value": "http://localhost:3000"
+		}
+	]
+}

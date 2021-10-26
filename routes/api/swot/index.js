@@ -46,6 +46,21 @@ router.get('/bymeta/:meta', async (req, res, next) => {
   }
 }); // get by meta
 
+router.get('/facet/:page/:items/:text', async (req, res, next)=> {
+  try {
+    let {page, items, text}  = req.params;
+    page = parseInt(page) || 1;
+    items = parseInt(items) || 10;
+
+    const swots = await Swot.getByFacet(text, page, items);
+
+    return res.status(200).json(swots);
+  } catch (ex) {
+    console.log(ex);
+    return res.status(500).json({ msg: "Error al procesar petición" });
+  }
+}); // facet
+
 router.get('/byrelevancerange/:lower/:upper/:extremes', async (req, res, next)=>{
   try{
     const {lower, upper, extremes } = req.params;
