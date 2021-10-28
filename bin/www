@@ -3,7 +3,8 @@
 /**
  * Module dependencies.
  */
-
+var dotenv = require('dotenv');
+dotenv.config();
 
 var app = require('../app');
 var debug = require('debug')('swotbackend:server');

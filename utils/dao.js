@@ -1,7 +1,5 @@
 var mongoClient = require('mongodb').MongoClient;
-var dotenv = require('dotenv');
 
-dotenv.config();
 
 var {
   MONGO_USER,
