@@ -1,0 +1,22 @@
+http://www.passportjs.org
+
+github  -- Equipo 1
+linkedin -- Equipo 2
+google -- Equipo 3
+twitter -- Equipo 4
+facebook -- Equipo 5
+spotify -- Equipo 6
+instagram -- Equipo 7
+discord -- Equipo 8
+outlook -- Equipo 9
+yahoo -- Equipo 10
+kakao -- Equipo  Bonus
+
+Requrimiento
+Permitir un endpoint
+GET /api/hw/{metodo}/getinfo
+No Authenticated
+Devuelve 401 o el redireccionamiento hacia el server de autenticación
+
+Authenticated
+{"msg":"Eureka, funciona. {metodo}"}
