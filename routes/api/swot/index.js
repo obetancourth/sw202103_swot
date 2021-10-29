@@ -5,7 +5,7 @@ var Swot = new SwotDao();
 
 router.get('/all', async (req, res, next)=>{
   try{
-    const allSwotEntries = await Swot.getAll();
+    const allSwotEntries = await Swot.getAll(req.user._id);
     return res.status(200).json(allSwotEntries);
   }catch(ex){
     console.log(ex);
@@ -95,7 +95,7 @@ router.post('/new', async (req, res, next)=>{
     } = req.body;
     const swotMetaArray = swotMeta.split('|');
     // validaciones
-    const result = await Swot.addNew(swotType, swotDesc, swotMetaArray);
+    const result = await Swot.addNew(swotType, swotDesc, swotMetaArray, req.user._id);
     console.log(result);
     res.status(200).json({msg:"Agregado Satisfactoriamente"});
   } catch (ex) {

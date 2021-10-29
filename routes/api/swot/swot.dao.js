@@ -15,8 +15,9 @@ class Swot{
       process.exit(1);
     }
   }
-  async getAll(){
-    let swots = await this.swotColl.find({});
+  async getAll(id){
+    const filter = {"user_id": new ObjectID(id)}
+    let swots = await this.swotColl.find(filter);
     return swots.toArray();
   }
 
@@ -86,12 +87,13 @@ class Swot{
   */
  
 
-  async addNew(swotType, swotDesc, swotMetaArray){
+  async addNew(swotType, swotDesc, swotMetaArray, id){
     let newSwot = {
       swotType,
       swotDesc,
       swotMeta: swotMetaArray,
-      swotDate: new Date().getTime()
+      swotDate: new Date().getTime(),
+      user_id: new ObjectID(id) 
     }
     let result = await this.swotColl.insertOne(newSwot);
     return result;
