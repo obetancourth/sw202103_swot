@@ -27,7 +27,8 @@ router.get('/byid/:id', async (req, res, next)=>{
 router.get('/bytype/:type', async (req, res, next)=>{
   try {
     const {type} = req.params;
-    const swots = await Swot.getByType(type);
+    
+    const swots = await Swot.getByType(type, req.user._id);
     return res.status(200).json(swots);
   } catch(ex){
     console.log(ex);
@@ -38,7 +39,7 @@ router.get('/bytype/:type', async (req, res, next)=>{
 router.get('/bymeta/:meta', async (req, res, next) => {
   try {
     const { meta } = req.params;
-    const swots = await Swot.getByMetaKey(meta);
+    const swots = await Swot.getByMetaKey(meta, req.user._id);
     return res.status(200).json(swots);
   } catch (ex) {
     console.log(ex);
@@ -52,7 +53,7 @@ router.get('/facet/:page/:items/:text', async (req, res, next)=> {
     page = parseInt(page) || 1;
     items = parseInt(items) || 10;
 
-    const swots = await Swot.getByFacet(text, page, items);
+    const swots = await Swot.getByFacet(text, page, items, req.user._id);
 
     return res.status(200).json(swots);
   } catch (ex) {
@@ -79,6 +80,16 @@ router.get('/byrelevancerange/:lower/:upper/:extremes', async (req, res, next)=>
       }
     };
     const swots = await Swot.getWithFilterAndProjection(filter, {});
+    return res.status(200).json(swots);
+  }catch (ex) {
+    console.log(ex);
+    return res.status(500).json({ msg: "Error al procesar petición" });
+  }
+});
+
+router.get('/dashboard', async (req, res, next)=>{
+  try{
+    const swots = await Swot.getAggregatedData(req.user._id);
     return res.status(200).json(swots);
   }catch (ex) {
     console.log(ex);

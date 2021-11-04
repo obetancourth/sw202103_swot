@@ -44,22 +44,22 @@ class Swot{
     return swotDocument;
   }
 
-  async getByType(type){
+  async getByType(type, userId){
     // SELECT * from SWOT where swotType = ?;
-    const filter = {"swotType": type};
+    const filter = { "swotType": type, "user_id" : new ObjectID(userId) };
     let cursor = await this.swotColl.find(filter);
     return cursor.toArray();
   }
 
-  async getByMetaKey(key){
-    const filter = {"swotMeta":key};
+  async getByMetaKey(key, userId){
+    const filter = { "swotMeta": key, "user_id": new ObjectID(userId)};
     let cursor = await this.swotColl.find(filter);
     return cursor.toArray();
   }
 
-  async getByFacet(textToSearch, page, itemsPerPage){
-    const filter = { swotDesc:  RegExp(textToSearch,'g')};
-    console.log(filter);
+  async getByFacet(textToSearch, page, itemsPerPage, userId){
+    const filter = { swotDesc: RegExp(textToSearch, 'g'), "user_id": new ObjectID(userId)};
+    //console.log(filter);
     /*const options = {
       projection: {},
       limit: itemsPerPage,
@@ -80,6 +80,31 @@ class Swot{
     // SELECT column1, column2 from TABLE where column1 like '%SomeText%';
   }
 
+  async getAggregatedData(userId){
+    // select type, count(*) from SWOTS where userId=? group by type;
+    // count, sum, mean, avg, max, min, stdev, ....
+    const PipeLine = [
+      {
+        '$match': {
+          'user_id': new ObjectID(userId)
+        }
+      }, {
+        '$group': {
+          '_id': '$swotType',
+          'swotTypeCount': {
+            '$sum': 1
+          }
+        }
+      }, {
+        '$sort': {
+          '_id': 1
+        }
+      }
+    ];
+    //  ls -l | grep .jpg
+    const cursor = this.swotColl.aggregate(PipeLine);
+    return await cursor.toArray();
+  }
   /*
     SWOT, SWOTMETA   {swotid 1:n}
     SELECT * from SWOT INNER JOIN SWOTMETA on SWOT.swotid = SWOTMETA.swotid
@@ -114,8 +139,6 @@ class Swot{
     let result = await this.swotColl.deleteOne(filter);
     return result;
   }
-
-
 }
 
 module.exports = Swot;
