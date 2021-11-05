@@ -1,6 +1,7 @@
 const express = require("express");
 let router = express.Router();
 const jwt = require("jsonwebtoken");
+const mailSender = require("../../../utils/mailer");
 let SecModelClass = require('./sec.model.js');
 let SecModel = new SecModelClass();
 
@@ -51,6 +52,15 @@ router.post('/signin', async (req, res, next) => {
   } catch (ex) {
     res.status(500).json({ "msg": "Error" });
   }
+});
+
+router.get('/passsrecovery', async (req, res, next)=>{
+  mailSender(
+    "orlando.betancourth@gmail.com",
+    "Test de Envio de Correo",
+    '<h1>Esto es un prueba de correo</h1><p>Click aqui para setear contraseña <a href="http://localhost:3000/recovery">CLICK ME</></p>'
+  );
+  res.status(200).json({msg:"Email Sent!!!"});
 });
 
 module.exports = router;
