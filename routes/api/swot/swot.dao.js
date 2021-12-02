@@ -68,6 +68,7 @@ class Swot{
     //let cursor = await this.swotColl.find(filter, options);
     let cursor = await this.swotColl.find(filter);
     let docsMatched = await cursor.count();
+    cursor.sort({swotType:1});
     cursor.skip((itemsPerPage * (page - 1)));
     cursor.limit(itemsPerPage);
     let documents = await cursor.toArray();
