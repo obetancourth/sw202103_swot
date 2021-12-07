@@ -35,6 +35,7 @@ router.get('/', (req, res, next)=>{
 );
 
 router.use('/sec', secRouter);
+router.get('/sec/ping', jwtMiddleware, (req, res)=>{res.status(200).json({ping:new Date().getTime()})});
 router.use('/swot', jwtMiddleware ,swotRouter);
 
 /*
